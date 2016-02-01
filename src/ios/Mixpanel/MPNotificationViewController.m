@@ -4,7 +4,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
-#import "MPCategoryHelpers.h"
+#import "UIView+MPHelpers.h"
 #import "MPLogger.h"
 #import "MPNotification.h"
 #import "MPNotificationViewController.h"
@@ -23,7 +23,7 @@
 
 @interface ElasticEaseOutAnimation : CAKeyframeAnimation {}
 
-- (id)initWithStartValue:(CGRect)start endValue:(CGRect)end andDuration:(double)duration;
+- (instancetype)initWithStartValue:(CGRect)start endValue:(CGRect)end andDuration:(double)duration;
 
 @end
 
@@ -275,12 +275,15 @@
     self.bodyLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.bodyLabel.numberOfLines = 0;
 
-    UIColor *backgroundColor = [UIColor mp_applicationPrimaryColor];
-    if (!backgroundColor) {
-        backgroundColor = [UIColor mp_darkEffectColor];
+    if (!self.backgroundColor) {
+        self.backgroundColor = [UIColor mp_applicationPrimaryColor];
+        if (!self.backgroundColor) {
+            self.backgroundColor = [UIColor mp_darkEffectColor];
+        }
     }
-    backgroundColor = [backgroundColor colorWithAlphaComponent:0.95f];
-    self.view.backgroundColor = backgroundColor;
+
+    UIColor *backgroundColorWithAlphaComponent = [self.backgroundColor colorWithAlphaComponent:0.95f];
+    self.view.backgroundColor = backgroundColorWithAlphaComponent;
 
     if (self.notification != nil) {
         if (self.notification.image != nil) {
@@ -545,7 +548,7 @@
 
 @implementation MPAlphaMaskView
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     if(self = [super initWithCoder:aDecoder]) {
         _maskLayer = [GradientMaskLayer layer];
@@ -567,7 +570,7 @@
 
 @implementation MPActionButton
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super initWithCoder:aDecoder]) {
         self.layer.backgroundColor = [UIColor colorWithRed:43.0f/255.0f green:43.0f/255.0f blue:52.0f/255.0f alpha:1.0f].CGColor;
@@ -634,7 +637,7 @@
 
 @implementation CircleLayer
 
-+ (id)layer {
++ (instancetype)layer {
     CircleLayer *cl = (CircleLayer *)[super layer];
     cl.circlePadding = 2.5f;
     return cl;
@@ -704,7 +707,7 @@
 
 @implementation ElasticEaseOutAnimation
 
-- (id)initWithStartValue:(CGRect)start endValue:(CGRect)end andDuration:(double)duration
+- (instancetype)initWithStartValue:(CGRect)start endValue:(CGRect)end andDuration:(double)duration
 {
     if ((self = [super init])) {
         self.duration = duration;
