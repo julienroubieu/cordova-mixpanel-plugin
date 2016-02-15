@@ -283,7 +283,7 @@
 }
 
 
-- (void)forceNotification
+- (void)forceNotification:(CDVInvokedUrlCommand*)command;
 {
     Mixpanel* mixpanelInstance = [Mixpanel sharedInstance];
     [mixpanelInstance showNotification];
