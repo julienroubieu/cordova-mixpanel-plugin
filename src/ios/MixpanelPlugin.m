@@ -263,6 +263,7 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+
 -(void)people_set_once:(CDVInvokedUrlCommand*)command;
 {
     CDVPluginResult* pluginResult = nil;
@@ -279,6 +280,13 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+
+- (void)forceNotification
+{
+    Mixpanel* mixpanelInstance = [Mixpanel sharedInstance];
+    [mixpanelInstance showNotification];
 }
 
 @end
