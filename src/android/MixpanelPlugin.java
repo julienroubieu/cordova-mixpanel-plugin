@@ -34,7 +34,7 @@ public class MixpanelPlugin extends CordovaPlugin {
         RESET("reset"),
         SHOW_SURVEY("showSurvey"),
         TRACK("track"),
-
+	FORCE_NOTIFICATION("forceNotification");
 
         // PEOPLE API
 
@@ -100,6 +100,8 @@ public class MixpanelPlugin extends CordovaPlugin {
                 return handleShowSurvey(args, cbCtx);
             case TRACK:
                 return handleTrack(args, cbCtx);
+            case FORCE_NOTIFICATION:
+                return handleForceNotification(args, cbCtx);
             case PEOPLE_IDENTIFY:
                 return handlePeopleIdentify(args, cbCtx);
             case PEOPLE_INCREMENT:
@@ -270,20 +272,12 @@ public class MixpanelPlugin extends CordovaPlugin {
         cbCtx.success();
         return true;
     }
+ 
+    private boolean handleForceNotification(JSONArray args, final CallbackContext cbCtx) {
+        Context ctx = cordova.getActivity();
+        mixpanel.getPeople().showNotificationIfAvailable(ctx);
+        cbCtx.success();
+        return true;
+    }
 
-  private boolean trackPeopleRevenue(JSONArray args, final CallbackContext cbCtx) {
-    Double charge = args.optDouble(0);
-    JSONObject properties = args.optJSONObject(1);
-    mixpanel.getPeople().trackCharge(charge, properties);
-    cbCtx.success();
-    return true;
-  }
-
-  private boolean incrementPeopleEvent(JSONArray args, final CallbackContext cbCtx) {
-    String property  = args.optString(0);
-    Double increment = args.optDouble(1);
-    mixpanel.getPeople().increment(property, increment);
-    cbCtx.success();
-    return true;
-  }
 }
