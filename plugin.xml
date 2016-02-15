@@ -99,6 +99,7 @@
         <header-file src="src/ios/Mixpanel/MPDesignerSessionCollection.h" />
         <header-file src="src/ios/Mixpanel/MPEnumDescription.h" />
         <header-file src="src/ios/Mixpanel/MPEventBinding.h" />
+        <header-file src="src/ios/Mixpanel/MPFoundation.h" />
         <header-file src="src/ios/Mixpanel/MPLogger.h" />
         <header-file src="src/ios/Mixpanel/MPNotification.h" />
         <header-file src="src/ios/Mixpanel/MPNotificationViewController.h" />
@@ -126,6 +127,8 @@
         <header-file src="src/ios/Mixpanel/MPVariant.h" />
         <header-file src="src/ios/Mixpanel/MPWebSocket.h" />
         <header-file src="src/ios/Mixpanel/Mixpanel.h" />
+        <header-file src="src/ios/Mixpanel/MixpanelExceptionHandler.h" />
+        <header-file src="src/ios/Mixpanel/MixpanelWatchOS.h" />
         <header-file src="src/ios/Mixpanel/NSData+MPBase64.h" />
         <header-file src="src/ios/Mixpanel/NSInvocation+MPHelpers.h" />
         <header-file src="src/ios/Mixpanel/UIColor+MPColor.h" />
@@ -189,6 +192,8 @@
         <source-file src="src/ios/Mixpanel/MPVariant.m" />
         <source-file src="src/ios/Mixpanel/MPWebSocket.m" />
         <source-file src="src/ios/Mixpanel/Mixpanel.m" />
+        <source-file src="src/ios/Mixpanel/MixpanelExceptionHandler.m" />
+        <source-file src="src/ios/Mixpanel/MixpanelWatchOS.m" />
         <source-file src="src/ios/Mixpanel/NSData+MPBase64.m" />
         <source-file src="src/ios/Mixpanel/NSInvocation+MPHelpers.m" />
         <source-file src="src/ios/Mixpanel/UIColor+MPColor.m" />
