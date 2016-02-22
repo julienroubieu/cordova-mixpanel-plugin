@@ -1,5 +1,6 @@
 package com.frugl.cordova.mixpanel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
