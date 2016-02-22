@@ -34,7 +34,7 @@ public class MixpanelPlugin extends CordovaPlugin {
         RESET("reset"),
         SHOW_SURVEY("showSurvey"),
         TRACK("track"),
-	FORCE_NOTIFICATION("forceNotification");
+	FORCE_NOTIFICATION("forceNotification"),
 
         // PEOPLE API
 
