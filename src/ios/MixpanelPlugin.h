@@ -21,18 +21,18 @@
 -(void)init:(CDVInvokedUrlCommand*)command;
 -(void)registerSuperProperties:(CDVInvokedUrlCommand*)command;
 -(void)reset:(CDVInvokedUrlCommand*)command;
+-(void)showSurvey:(CDVInvokedUrlCommand*)command;
 -(void)track:(CDVInvokedUrlCommand*)command;
+-(void)forceNotification:(CDVInvokedUrlCommand*)command;
 
 
 // PEOPLE API
 
 
 -(void)people_identify:(CDVInvokedUrlCommand*)command;
--(void)people_registerPushId:(CDVInvokedUrlCommand*)command;
--(void)people_set:(CDVInvokedUrlCommand*)command;
--(void)people_trackRevenue:(CDVInvokedUrlCommand*)command;
 -(void)people_increment:(CDVInvokedUrlCommand*)command;
-
-
+-(void)people_setPushId:(CDVInvokedUrlCommand*)command;
+-(void)people_set:(CDVInvokedUrlCommand*)command;
+-(void)people_set_once:(CDVInvokedUrlCommand*)command;
 
 @end

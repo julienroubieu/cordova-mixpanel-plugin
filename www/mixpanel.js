@@ -23,7 +23,7 @@ mixpanel.alias = mixpanel.createAlias = function(alias, originalId, onSuccess, o
 };
 
 mixpanel.distinctId = function(onSuccess, onFail) {
-  exec(onSuccess, onFail, 'Mixpanel', 'distinctId');
+  exec(onSuccess, onFail, 'Mixpanel', 'distinctId', []);
 };
 
 mixpanel.flush = function(onSuccess, onFail) {
@@ -58,6 +58,10 @@ mixpanel.reset = function(onSuccess, onFail) {
   exec(onSuccess, onFail, 'Mixpanel', 'reset', []);
 };
 
+mixpanel.showSurvey = function(onSuccess, onFail) {
+  exec(onSuccess, onFail, 'Mixpanel', 'showSurvey', []);
+};
+
 mixpanel.track = function(eventName, eventProperties, onSuccess, onFail) {
   if (!eventName || typeof eventName != 'string') {
     return onFail(errors.invalid('event', eventName));
@@ -86,14 +90,39 @@ mixpanel.people.set = function(peopleProperties, onSuccess, onFail) {
   exec(onSuccess, onFail, 'Mixpanel', 'people_set', [peopleProperties]);
 };
 
-mixpanel.people.registerPushId = function(pushId, onSuccess, onFail) {
+mixpanel.people.setOnce = function(peopleProperties, onSuccess, onFail) {
+  if (!peopleProperties || (typeof peopleProperties === 'object' && Object.keys(peopleProperties).length === 0)) {
+    return onFail(errors.invalid('properties', peopleProperties));
+  }
+
+  exec(onSuccess, onFail, 'Mixpanel', 'people_set_once', [peopleProperties]);
+};
+
+mixpanel.people.increment = function(peopleProperties, onSuccess, onFail) {
+  if (!peopleProperties || (typeof peopleProperties === 'object' && Object.keys(peopleProperties).length === 0)) {
+    return onFail(errors.invalid('properties', peopleProperties));
+  }
+
+  exec(onSuccess, onFail, 'Mixpanel', 'people_increment', [peopleProperties]);
+};
+
+/**
+ * @param pushId is the token/id you get back when registering the device with the notification service
+ *        for android - this is the GCM token
+ *        for ios - this is the APN token
+ */
+mixpanel.people.setPushId = function(pushId, onSuccess, onFail) {
   if (!pushId || typeof pushId !== 'string') {
     return onFail(errors.invalid('pushId', pushId));
   }
 
-  exec(onSuccess, onFail, 'Mixpanel', 'people_registerPushId', [pushId]);
+  exec(onSuccess, onFail, 'Mixpanel', 'people_setPushId', [pushId]);
 };
 
+mixpanel.forceNotification = function(onSuccess, onFail){
+  exec(onSuccess, onFail, 'Mixpanel', 'forceNotification', []);
+}
+  
 
 // Exports
 

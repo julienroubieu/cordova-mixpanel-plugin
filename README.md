@@ -1,13 +1,17 @@
 
 ## Cordova Plugin that wraps Mixpanel sdk for android and ios
 
-- [android sdk version 4.5.3](https://github.com/mixpanel/mixpanel-android/tree/v4.5.3)
-- [ios sdk version 2.7.2](https://github.com/mixpanel/mixpanel-iphone/tree/v2.7.2)
+- [android sdk version 4.7.0](https://github.com/mixpanel/mixpanel-android/tree/v4.7.0)
+- [ios sdk version 2.9.1](https://github.com/mixpanel/mixpanel-iphone/tree/v2.9.1)
 
 #### Install
 
 ```
-cordova plugin add https://github.com/samzilverberg/cordova-mixpanel-plugin.git
+for cordova version > 5.x.x:
+  cordova plugin add cordova-plugin-mixpanel
+
+older versions:
+  cordova plugin add https://github.com/samzilverberg/cordova-mixpanel-plugin.git
 ```
 
 #### Usage
@@ -23,37 +27,47 @@ cordova plugin add https://github.com/samzilverberg/cordova-mixpanel-plugin.git
 - registerSuperProperties(superProperties, onSuccess, onFail)
 - reset(onSuccess, onFail)
 - track(eventName, eventProperties, onSuccess, onFail)
+- showSurvey(onSuccess, onFail) **currently only iOS**
+  -  by default the SDK attempts to show any available survey at app launch.  If you'd like to trigger a survey after a particular action though use this.
 
 **window.mixpanel.people:**
 
 - identify(distinctId, onSuccess, onFail)
-- registerPushId(registrationId, onSuccess, onFail)
+- increment(peopleProperties, onSuccess, onFail)
+- setPushId(pushId, onSuccess, onFail)
   - More info about push notifications at:
     - [android](https://mixpanel.com/site_media/doctyl/uploads/Android-spec/com/mixpanel/android/mpmetrics/MixpanelAPI.People.html#initPushHandling(java.lang.String))
     - [ios](https://mixpanel.com/help/reference/ios-push-notifications)
-    - Note that the [PhoneGap Push Plugin](https://github.com/phonegap/phonegap-plugin-push) can be used to get the registrationId like so:
-```
-  var push = PushNotification.init({
-      'android': {'senderID': '<GCM Sender ID>'},
-      'ios': {'alert': 'true', 'badge': 'true', 'sound': 'true'}
-  });
-  push.on('registration', function(data) {
-    mixpanel.people.registerPushId(data.registrationId);
-  });
-```
+  - Usage example using the [PhoneGap Push Plugin](https://github.com/phonegap/phonegap-plugin-push):
+  ```
+    var push = PushNotification.init({
+        'android': {'senderID': '<GCM Sender ID>'},
+        'ios': {'alert': 'true', 'badge': 'true', 'sound': 'true'}
+    });
+    push.on('registration', function(data) {
+      mixpanel.people.setPushId(data.registrationId, function onSuccess(){}, function onFail(){});
+    });
+  ```
 - set(peopleProperties, onSuccess, onFail)
+- setOnce(peopleProperties, onSuccess, onFail)
 
 
 ## TODOs
-
-- check if sdks need to be updated
-- [publish to npm](https://cordova.apache.org/announcements/2015/04/21/plugins-release-and-move-to-npm.html)
 - add more Mixpanel People operations
-  - set once, unset, increment, delete (more?)
+  - unset, delete (more?)
 - make sure ios/android use same error messages
 - refactor ios code
   - remove code duplication of checking that mixpanel was init
 
+
+## Contributing and Testing
+
+contributions of all sorts to the source code are more than welcome.
+any contribution will be noted in the changeslog (for FAME! :-D ).
+
+Please try to test your contributions using your cordova project or a dummy test project.
+You may use mine which i've published to NPM:
+https://www.npmjs.com/package/cordova-mixpanel-plugin-testapp
 
 
 ## Troubleshooting
@@ -79,6 +93,12 @@ cordova build ios
 ```
 and setting up the build phase correctly again, as described in last question.
 
+
+#### hey i'm on iOS>9 and nothing is happening, why?
+
+google for NSAppTransportSecurity.
+since iOS9 they are more strict about what your app is allowed to connect to.
+you will have to manually add some entries to your app plist file to allow network connectivity to mixpanel server.
 
 
 ##### Keywords

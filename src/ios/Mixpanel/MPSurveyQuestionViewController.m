@@ -5,6 +5,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MPLogger.h"
 #import "MPSurveyQuestionViewController.h"
+#import "MPFoundation.h"
 
 @interface MPSurveyQuestionViewController ()
 
@@ -74,7 +75,7 @@ typedef NS_ENUM(NSInteger, MPSurveyTableViewCellPosition) {
 {
     // Can't use _prompt.bounds here cause it hasn't been calculated yet.
     CGFloat promptWidth = self.view.bounds.size.width - 30; // 2x 15 point horizontal padding on prompt
-    CGFloat promptHeight = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ? 72 : 48;
+    CGFloat promptHeight = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ? 72 : 48;
     UIFont *font = _prompt.font;
     CGSize constraintSize = CGSizeMake(promptWidth, CGFLOAT_MAX);
 
@@ -85,7 +86,7 @@ typedef NS_ENUM(NSInteger, MPSurveyTableViewCellPosition) {
 
         // Use boundingRectWithSize for iOS 7 and above, sizeWithFont otherwise.
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-        if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
+        if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
             sizeToFit = [_prompt.text boundingRectWithSize:constraintSize
                                                        options:NSStringDrawingUsesLineFragmentOrigin
                                                     attributes:@{NSFontAttributeName: font}
@@ -135,7 +136,7 @@ typedef NS_ENUM(NSInteger, MPSurveyTableViewCellPosition) {
     if (_position == MPSurveyTableViewCellPositionTop) {
         corners = UIRectCornerTopLeft | UIRectCornerTopRight;
     } else if (_position == MPSurveyTableViewCellPositionMiddle) {
-        corners = 0;
+        corners = (UIRectCorner)0;
     } else if (_position == MPSurveyTableViewCellPositionBottom) {
         corners = UIRectCornerBottomLeft | UIRectCornerBottomRight;
     } else {
@@ -221,6 +222,10 @@ typedef NS_ENUM(NSInteger, MPSurveyTableViewCellPosition) {
 
 @implementation MPSurveyMultipleChoiceQuestionViewController
 
+// Since question is declared as a different class in superclass MPSurveyQuestionViewController,
+// indicate dynamic to use parent accessors.
+@dynamic question;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -248,7 +253,7 @@ typedef NS_ENUM(NSInteger, MPSurveyTableViewCellPosition) {
         label = value;
     } else if ([value isKindOfClass:[NSNumber class]]) {
         int i = [value intValue];
-        if (CFNumberGetType((CFNumberRef)value) == kCFNumberCharType && (i == 0 || i == 1)) {
+        if (CFNumberGetType((__bridge CFNumberRef)value) == kCFNumberCharType && (i == 0 || i == 1)) {
             label = i ? @"Yes" : @"No";
         } else {
             NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
@@ -329,6 +334,10 @@ typedef NS_ENUM(NSInteger, MPSurveyTableViewCellPosition) {
 
 @implementation MPSurveyTextQuestionViewController
 
+// Since question is declared as a different class in superclass MPSurveyQuestionViewController,
+// indicate dynamic to use parent accessors.
+@dynamic question;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -344,7 +353,7 @@ typedef NS_ENUM(NSInteger, MPSurveyTableViewCellPosition) {
 {
     [super viewWillAppear:animated];
     [self registerForKeyboardNotifications];
-    if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+    if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
         [self.textView becomeFirstResponder];
     }
 }
@@ -360,7 +369,7 @@ typedef NS_ENUM(NSInteger, MPSurveyTableViewCellPosition) {
 {
     [super viewWillLayoutSubviews];
     self.keyboardAccessoryWidth.constant = self.view.bounds.size.width;
-    self.textViewHeight.constant = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ? 72 : 48;
+    self.textViewHeight.constant = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ? 72 : 48;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -403,7 +412,7 @@ typedef NS_ENUM(NSInteger, MPSurveyTableViewCellPosition) {
     NSTimeInterval duration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     UIViewAnimationOptions curve = [info[UIKeyboardAnimationDurationUserInfoKey] unsignedIntegerValue];
     CGFloat promptTopSpace, promptAlpha;
-    if (UIDeviceOrientationIsPortrait(([UIApplication sharedApplication].statusBarOrientation))) {
+    if (UIInterfaceOrientationIsPortrait(([UIApplication sharedApplication].statusBarOrientation))) {
         promptTopSpace = 15;
         promptAlpha = 1;
     } else {
