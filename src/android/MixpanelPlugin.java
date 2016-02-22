@@ -274,8 +274,8 @@ public class MixpanelPlugin extends CordovaPlugin {
     }
  
     private boolean handleForceNotification(JSONArray args, final CallbackContext cbCtx) {
-        Context ctx = cordova.getActivity();
-        mixpanel.getPeople().showNotificationIfAvailable(ctx);
+        Activity act = cordova.getActivity();
+        mixpanel.getPeople().showNotificationIfAvailable(act);
         cbCtx.success();
         return true;
     }
