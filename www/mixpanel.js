@@ -114,6 +114,11 @@ mixpanel.people.trackCharge = function(amount, properties, onSuccess, onFail) {
   exec(onSuccess, onFail, 'Mixpanel', 'people_trackCharge', [amount, properties]);
 };
 
+mixpanel.people.deleteUser = function(onSuccess, onFail) {
+  exec(onSuccess, onFail, 'Mixpanel', 'people_deleteUser', []);
+};
+
+
 /**
  * @param pushId is the token/id you get back when registering the device with the notification service
  *        for android - this is the GCM token
@@ -129,8 +134,8 @@ mixpanel.people.setPushId = function(pushId, onSuccess, onFail) {
 
 mixpanel.forceNotification = function(onSuccess, onFail){
   exec(onSuccess, onFail, 'Mixpanel', 'forceNotification', []);
-}
-  
+};
+
 
 // Exports
 
