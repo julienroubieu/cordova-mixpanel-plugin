@@ -1,4 +1,4 @@
-package com.frugl.cordova.mixpanel;
+package com.roubieu.cordova.mixpanel;
 
 import android.app.Activity;
 import android.content.Context;
