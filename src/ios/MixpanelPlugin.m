@@ -283,6 +283,26 @@
 }
 
 
+-(void)people_trackCharge:(CDVInvokedUrlCommand*)command;
+{
+    CDVPluginResult* pluginResult = nil;
+    Mixpanel* mixpanelInstance = [Mixpanel sharedInstance];
+    NSNumber* amount = [command.arguments objectAtIndex:0];
+    NSDictionary* properties = [command.arguments objectAtIndex:1 withDefault:@{}];
+
+    if (mixpanelInstance == nil)
+    {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Mixpanel not initialized"];
+    }
+    else
+    {
+        [mixpanelInstance.people trackCharge:amount withProperties:properties];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+
 - (void)forceNotification:(CDVInvokedUrlCommand*)command;
 {
     Mixpanel* mixpanelInstance = [Mixpanel sharedInstance];

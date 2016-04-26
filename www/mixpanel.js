@@ -106,6 +106,14 @@ mixpanel.people.increment = function(peopleProperties, onSuccess, onFail) {
   exec(onSuccess, onFail, 'Mixpanel', 'people_increment', [peopleProperties]);
 };
 
+mixpanel.people.trackCharge = function(amount, properties, onSuccess, onFail) {
+  if (typeof amount != 'number') {
+    return onFail(errors.invalid('amount', amount));
+  }
+
+  exec(onSuccess, onFail, 'Mixpanel', 'people_trackCharge', [amount, properties]);
+};
+
 /**
  * @param pushId is the token/id you get back when registering the device with the notification service
  *        for android - this is the GCM token

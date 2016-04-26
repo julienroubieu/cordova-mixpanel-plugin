@@ -34,5 +34,6 @@
 -(void)people_setPushId:(CDVInvokedUrlCommand*)command;
 -(void)people_set:(CDVInvokedUrlCommand*)command;
 -(void)people_set_once:(CDVInvokedUrlCommand*)command;
+-(void)people_trackCharge:(CDVInvokedUrlCommand*)command;
 
 @end
