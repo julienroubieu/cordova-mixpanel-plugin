@@ -1,6 +1,10 @@
 Changelog
 =========
 
+### 2.2.0 2016-04-26
+- added people.trackCharge on iOS and Android
+- added people.deleteUser on iOS and Android
+
 ### 2.1.0 2015-12-20
 - fix for distinctId by damienfa
 - browser platform supported (thanks [Damien Fa](https://github.com/damienfa))
