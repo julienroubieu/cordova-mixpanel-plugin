@@ -32,7 +32,7 @@
         </config-file>
 
         <!-- Plugin files -->
-        <source-file src="src/android/MixpanelPlugin.java" target-dir="src/android"/>
+        <source-file src="src/android/MixpanelPlugin.java" target-dir="src/com/roubieu/cordova/mixpanel"/>
         <resource-file src="libs/mixpanel-android.aar" target="libs/mixpanel-android.aar"/>
         <framework src="src/android/my.gradle" custom="true" type="gradleReference" />
         <!-- AndroidManifest.xml -->
